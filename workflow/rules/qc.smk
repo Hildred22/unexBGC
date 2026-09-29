@@ -1,6 +1,7 @@
 # Quality assessment and control rules for unexBGC
 
 # FastQC quality assessment of raw paired end reads
+
 rule fastqc:
     input:
         r1="data/raw/{sample}_R1_001.fastq.gz",
@@ -21,6 +22,7 @@ rule fastqc:
         """
 
 # MultiQC aggregation of FastQC results on raw reads
+
 rule multiqc_raw:
     input:
         "results/qc/fastqc"
@@ -38,6 +40,7 @@ rule multiqc_raw:
         """
 
 # FastP quality control of the raw paired end reads
+
 rule fastp:
     input:
         r1="data/raw/{sample}_R1_001.fastq.gz",
@@ -66,7 +69,9 @@ rule fastp:
             -j {output.json} \
             -h {output.html}
         """
-#FastQC quality assessment on trimmed and filtered reads obtained from FastP
+
+# FastQC quality assessment on trimmed and filtered reads obtained from FastP
+
 rule fastqc_trimmed:
     input:
         r1="results/qc/trimmed/{sample}_trimmed.R1.fastq.gz",
@@ -87,7 +92,8 @@ rule fastqc_trimmed:
             {input.r1} {input.r2}
         """
 
-#MultiQC to aggregate the FastQC results of the trimmed reads
+# MultiQC to aggregate the FastQC results of the trimmed reads
+
 rule multiqc_trimmed:
     input:
         "results/qc/fastqc_trimmed"
