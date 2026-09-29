@@ -1,5 +1,8 @@
 # unexBGC configuration file
 
+# Sample sheet
+samples: "config/samples.tsv"
+
 # Input data
 input_dir: "data/raw"
 
