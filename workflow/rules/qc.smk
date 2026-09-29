@@ -1,6 +1,7 @@
 # Quality assessment and control rules for unexBGC
 
-# FastQC quality assessment of raw paired end reads
+
+# FastQC quality assessment of raw paired-end reads
 
 rule fastqc:
     input:
@@ -11,21 +12,23 @@ rule fastqc:
         zip_r1="results/qc/fastqc/{sample}_R1_001_fastqc.zip",
         html_r2="results/qc/fastqc/{sample}_R2_001_fastqc.html",
         zip_r2="results/qc/fastqc/{sample}_R2_001_fastqc.zip"
-    
+
     shell:
         """
         mkdir -p results/qc/fastqc
+
         fastqc \
             --threads 2 \
             --outdir results/qc/fastqc \
             {input.r1} {input.r2}
         """
 
+
 # MultiQC aggregation of FastQC results on raw reads
 
 rule multiqc_raw:
     input:
-        "results/qc/fastqc"
+        directory("results/qc/fastqc")
     output:
         "results/qc/multiqc_raw/multiqc_report.html"
 
@@ -39,12 +42,14 @@ rule multiqc_raw:
             -n multiqc_report.html
         """
 
-# FastP quality control of the raw paired end reads
+
+# FastP quality control of the raw paired-end reads
 
 rule fastp:
     input:
         r1="data/raw/{sample}_R1_001.fastq.gz",
-        r2="data/raw/{sample}_R2_001.fastq.gz"
+        r2="data/raw/{sample}_R2_001.fastq.gz",
+        multiqc="results/qc/multiqc_raw/multiqc_report.html"
     output:
         r1="results/qc/trimmed/{sample}_trimmed.R1.fastq.gz",
         r2="results/qc/trimmed/{sample}_trimmed.R2.fastq.gz",
@@ -70,6 +75,7 @@ rule fastp:
             -h {output.html}
         """
 
+
 # FastQC quality assessment on trimmed and filtered reads obtained from FastP
 
 rule fastqc_trimmed:
@@ -92,11 +98,12 @@ rule fastqc_trimmed:
             {input.r1} {input.r2}
         """
 
-# MultiQC to aggregate the FastQC results of the trimmed reads
+
+# MultiQC aggregation of FastQC results on trimmed reads
 
 rule multiqc_trimmed:
     input:
-        "results/qc/fastqc_trimmed"
+        directory("results/qc/fastqc_trimmed")
     output:
         "results/qc/multiqc_trimmed/multiqc_report.html"
 
