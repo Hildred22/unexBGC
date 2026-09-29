@@ -1,0 +1,18 @@
+# unexBGC configuration file
+
+# Input data
+input_dir: "data/raw"
+
+# Output data
+output_dir: "results"
+
+# Computational resources ######NOT FINAL VALUES JUST FOR STRUCTURE
+threads:
+  fastp: 12
+  megahit: 24
+  quast: 12
+  bowtie2: 12
+  concoct: 12
+  metabat2: 12
+  maxbin2: 12
+  antismash: 24
