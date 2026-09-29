@@ -4,4 +4,4 @@ include: "workflow/rules/qc.smk"
 
 rule all:
     input:
-        "results/.pipeline_complete"
+        "results/qc/multiqc_trimmed/multiqc_report.html"
