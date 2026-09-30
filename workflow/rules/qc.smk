@@ -1,5 +1,6 @@
 # Quality assessment and control rules for unexBGC
 
+SAMPLES = samples["sample"].tolist()
 
 # FastQC quality assessment of raw paired-end reads
 
