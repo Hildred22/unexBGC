@@ -7,6 +7,7 @@ samples = pd.read_csv(config["samples"], sep="\t")
 include: "workflow/rules/qc.smk"
 include: "workflow/rules/assembly.smk"
 include: "workflow/rules/quast.smk"
+include: "workflow/rules/mapping.smk"
 
 rule all:
     input:
