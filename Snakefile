@@ -12,6 +12,7 @@ include: "workflow/rules/metabat2.smk"
 include: "workflow/rules/maxbin2.smk"
 include: "workflow/rules/dastool.smk"
 include: "workflow/rules/checkm2.smk"
+include: "workflow/rules/checkm2_combine.smk"
 
 rule all:
     input:
