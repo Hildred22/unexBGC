@@ -7,7 +7,7 @@ rule combine_checkm2:
             sample=samples["sample"].tolist()
         )
     output:
-        "results/binning/checkm2/CheckM2_all_samples.tsv"
+        "results/binning/checkm2/CheckM2_all_samples.csv"
     shell:
         """
         first=1
@@ -16,12 +16,12 @@ rule combine_checkm2:
             sample=$(basename $(dirname "$report"))
 
             if [ "$first" -eq 1 ]; then
-                echo -e "Sample\\t$(head -n 1 "$report")" > {output}
+                echo "Sample,$(head -n 1 "$report")" > {output}
                 first=0
             fi
 
             tail -n +2 "$report" | \
-                awk -v sample="$sample" '{{print sample "\\t" $0}}' \
+                awk -v sample="$sample" '{{print sample "," $0}}' \
                 >> {output}
         done
         """
