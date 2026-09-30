@@ -1,5 +1,8 @@
 # CONCOCT metagenomic binning rules for unexBGC
 
+
+# Chop assembled contigs into 10 kb fragments
+
 rule concoct_cut_up:
     input:
         contigs="results/assembly/megahit/{sample}/final.contigs.fa"
@@ -20,6 +23,8 @@ rule concoct_cut_up:
         """
 
 
+# Generate the CONCOCT coverage table
+
 rule concoct_coverage:
     input:
         bed="results/binning/concoct/{sample}/contigs_10K.bed",
@@ -35,22 +40,58 @@ rule concoct_coverage:
         """
 
 
+# Run CONCOCT
+
 rule concoct:
     input:
         contigs="results/binning/concoct/{sample}/contigs_10K.fa",
         coverage="results/binning/concoct/{sample}/coverage_table.tsv"
     output:
-        bins=directory("results/binning/concoct/{sample}/bins")
+        clustering="results/binning/concoct/{sample}/clustering_gt1500.csv"
     threads:
         config["threads"]["concoct"]
     shell:
         """
-        mkdir -p {output.bins}
+        mkdir -p results/binning/concoct/{wildcards.sample}
 
         concoct \
             --composition_file {input.contigs} \
             --coverage_file {input.coverage} \
-            --threads {threads} \
-            --basename {wildcards.sample}_concoct \
-            --output_path {output.bins}
+            --length_threshold 1500 \
+            -b results/binning/concoct/{wildcards.sample}/ \
+            -t {threads}
+        """
+
+
+# Merge fragment-level clustering back to original contigs
+
+rule concoct_merge:
+    input:
+        clustering="results/binning/concoct/{sample}/clustering_gt1500.csv"
+    output:
+        "results/binning/concoct/{sample}/clustering_merged.csv"
+    shell:
+        """
+        merge_cutup_clustering.py \
+            {input.clustering} \
+            > {output}
+        """
+
+
+# Extract individual CONCOCT bins as FASTA files
+
+rule concoct_extract_bins:
+    input:
+        contigs="results/assembly/megahit/{sample}/final.contigs.fa",
+        clustering="results/binning/concoct/{sample}/clustering_merged.csv"
+    output:
+        directory("results/binning/concoct/{sample}/fasta_bins")
+    shell:
+        """
+        mkdir -p {output}
+
+        extract_fasta_bins.py \
+            {input.contigs} \
+            {input.clustering} \
+            --output_path {output}
         """
