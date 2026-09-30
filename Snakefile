@@ -14,6 +14,7 @@ include: "workflow/rules/dastool.smk"
 include: "workflow/rules/checkm2.smk"
 include: "workflow/rules/checkm2_combine.smk"
 include: "workflow/rules/hq_mq.smk"
+include: "workflow/rules/drep.smk"
 
 rule all:
     input:
