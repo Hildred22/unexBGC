@@ -8,6 +8,8 @@ include: "workflow/rules/qc.smk"
 include: "workflow/rules/assembly.smk"
 include: "workflow/rules/quast.smk"
 include: "workflow/rules/mapping.smk"
+include: "workflow/rules/metabat2.smk"
+include: "workflow/rules/maxbin2.smk"
 
 rule all:
     input:
