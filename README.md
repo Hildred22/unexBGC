@@ -2,7 +2,7 @@
 
 An integrated Snakemake pipeline for identifying and characterising biosynthetic gene clusters from environmental metagenomic data.
 
-Overview
+## Overview
 
 unexBGC is a reproducible and modular bioinformatics pipeline designed to process environmental metagenomic sequencing data and investigate their biosynthetic potential.
 
@@ -10,11 +10,11 @@ The pipeline integrates quality control, metagenome assembly, genome binning, bi
 
 The pipeline is designed to support researchers who may not have extensive bioinformatics expertise by providing an integrated and reproducible workflow from raw sequencing reads to interpretable biosynthetic gene cluster information.
 
-Workflow
+## Workflow
 
 ###Add flow diagram of workflow here
 
-Input data
+## Input data
 
 The pipeline requires paired-end metagenomic sequencing reads.
 
@@ -28,7 +28,7 @@ data/raw/
 
 Raw sequencing data are not included in this repository.
 
-Sample sheet format
+## Sample sheet format
 
 The sample sheet should contain three columns:
 
@@ -41,7 +41,7 @@ sample1   sample1_R1.fastq.gz    sample1_R2.fastq.gz
 
 Users should replace the example entries with their own sample information.
 
-Reproducibility
+## Reproducibility
 
 The workflow is implemented using Snakemake, allowing individual pipeline steps to be executed according to their dependencies and enabling the workflow to be reproduced across datasets and computational environments.
 
