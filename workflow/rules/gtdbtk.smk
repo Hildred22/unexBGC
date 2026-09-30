@@ -8,10 +8,12 @@ rule gtdbtk:
     threads:
         24
     params:
-        data="/path/to/gtdbtk/database"
+        data=config["gtdbtk_db"]
     shell:
         """
         mkdir -p results/taxonomy/gtdbtk
+
+        export GTDBTK_DATA_PATH="{params.data}"
 
         gtdbtk classify_wf \
             --genome_dir {input.genomes} \
