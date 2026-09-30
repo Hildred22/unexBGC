@@ -33,6 +33,7 @@ sample    read1    read2
 For example:
 
 sample    read1              read2
+
 sample1   sample1_R1.fastq.gz    sample1_R2.fastq.gz
 
 Users should replace the example entries with their own sample information.
