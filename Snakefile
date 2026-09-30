@@ -1,4 +1,8 @@
+import pandas as pd
+
 configfile: "config/config.yaml"
+
+samples = pd.read_csv(config["samples"], sep="\t")
 
 include: "workflow/rules/qc.smk"
 
