@@ -10,6 +10,7 @@ include: "workflow/rules/quast.smk"
 include: "workflow/rules/mapping.smk"
 include: "workflow/rules/metabat2.smk"
 include: "workflow/rules/maxbin2.smk"
+include: "workflow/rules/dastool.smk"
 
 rule all:
     input:
