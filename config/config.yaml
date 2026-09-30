@@ -15,7 +15,7 @@ threads:
   megahit: 24
   quast: 12
   bowtie2: 12
-  concoct: 12
-  metabat2: 12
-  maxbin2: 12
   antismash: 24
+  concoct: 24
+  metabat2: 24
+  maxbin2: 24
