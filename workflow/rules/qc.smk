@@ -6,13 +6,13 @@ SAMPLES = samples["sample"].tolist()
 
 rule fastqc:
     input:
-        r1="data/raw/{sample}_R1_001.fastq.gz",
-        r2="data/raw/{sample}_R2_001.fastq.gz"
+        r1=lambda wildcards: "data/raw/" + samples.loc[samples["sample"] == wildcards.sample, "read1"].iloc[0],
+        r2=lambda wildcards: "data/raw/" + samples.loc[samples["sample"] == wildcards.sample, "read2"].iloc[0]
     output:
-        html_r1="results/qc/fastqc/{sample}_R1_001_fastqc.html",
-        zip_r1="results/qc/fastqc/{sample}_R1_001_fastqc.zip",
-        html_r2="results/qc/fastqc/{sample}_R2_001_fastqc.html",
-        zip_r2="results/qc/fastqc/{sample}_R2_001_fastqc.zip"
+        html_r1="results/qc/fastqc/{sample}_R1_fastqc.html",
+        zip_r1="results/qc/fastqc/{sample}_R1_fastqc.zip",
+        html_r2="results/qc/fastqc/{sample}_R2_fastqc.html",
+        zip_r2="results/qc/fastqc/{sample}_R2_fastqc.zip"
 
     shell:
         """
@@ -46,10 +46,9 @@ rule multiqc_raw:
 
 # FastP quality control of the raw paired-end reads
 
-rule fastp:
     input:
-        r1="data/raw/{sample}_R1_001.fastq.gz",
-        r2="data/raw/{sample}_R2_001.fastq.gz",
+        r1=lambda wildcards: "data/raw/" + samples.loc[samples["sample"] == wildcards.sample, "read1"].iloc[0],
+        r2=lambda wildcards: "data/raw/" + samples.loc[samples["sample"] == wildcards.sample, "read2"].iloc[0],
         multiqc="results/qc/multiqc_raw/multiqc_report.html"
     output:
         r1="results/qc/trimmed/{sample}_trimmed.R1.fastq.gz",
