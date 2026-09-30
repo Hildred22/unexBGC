@@ -2,12 +2,17 @@
 
 SAMPLES = samples["sample"].tolist()
 
+
 # FastQC quality assessment of raw paired-end reads
 
 rule fastqc:
     input:
-        r1=lambda wildcards: "data/raw/" + samples.loc[samples["sample"] == wildcards.sample, "read1"].iloc[0],
-        r2=lambda wildcards: "data/raw/" + samples.loc[samples["sample"] == wildcards.sample, "read2"].iloc[0]
+        r1=lambda wildcards: "data/raw/" + samples.loc[
+            samples["sample"] == wildcards.sample, "read1"
+        ].iloc[0],
+        r2=lambda wildcards: "data/raw/" + samples.loc[
+            samples["sample"] == wildcards.sample, "read2"
+        ].iloc[0]
     output:
         html_r1="results/qc/fastqc/{sample}_R1_fastqc.html",
         zip_r1="results/qc/fastqc/{sample}_R1_fastqc.zip",
@@ -29,7 +34,14 @@ rule fastqc:
 
 rule multiqc_raw:
     input:
-        directory("results/qc/fastqc")
+        expand(
+            "results/qc/fastqc/{sample}_R1_fastqc.html",
+            sample=SAMPLES
+        ),
+        expand(
+            "results/qc/fastqc/{sample}_R2_fastqc.html",
+            sample=SAMPLES
+        )
     output:
         "results/qc/multiqc_raw/multiqc_report.html"
 
@@ -38,7 +50,7 @@ rule multiqc_raw:
         mkdir -p results/qc/multiqc_raw
 
         multiqc \
-            {input} \
+            results/qc/fastqc \
             -o results/qc/multiqc_raw \
             -n multiqc_report.html
         """
@@ -46,9 +58,14 @@ rule multiqc_raw:
 
 # FastP quality control of the raw paired-end reads
 
+rule fastp:
     input:
-        r1=lambda wildcards: "data/raw/" + samples.loc[samples["sample"] == wildcards.sample, "read1"].iloc[0],
-        r2=lambda wildcards: "data/raw/" + samples.loc[samples["sample"] == wildcards.sample, "read2"].iloc[0],
+        r1=lambda wildcards: "data/raw/" + samples.loc[
+            samples["sample"] == wildcards.sample, "read1"
+        ].iloc[0],
+        r2=lambda wildcards: "data/raw/" + samples.loc[
+            samples["sample"] == wildcards.sample, "read2"
+        ].iloc[0],
         multiqc="results/qc/multiqc_raw/multiqc_report.html"
     output:
         r1="results/qc/trimmed/{sample}_trimmed.R1.fastq.gz",
@@ -103,7 +120,14 @@ rule fastqc_trimmed:
 
 rule multiqc_trimmed:
     input:
-        directory("results/qc/fastqc_trimmed")
+        expand(
+            "results/qc/fastqc_trimmed/{sample}_trimmed.R1_fastqc.html",
+            sample=SAMPLES
+        ),
+        expand(
+            "results/qc/fastqc_trimmed/{sample}_trimmed.R2_fastqc.html",
+            sample=SAMPLES
+        )
     output:
         "results/qc/multiqc_trimmed/multiqc_report.html"
 
@@ -112,7 +136,7 @@ rule multiqc_trimmed:
         mkdir -p results/qc/multiqc_trimmed
 
         multiqc \
-            {input} \
+            results/qc/fastqc_trimmed \
             -o results/qc/multiqc_trimmed \
             -n multiqc_report.html
         """
