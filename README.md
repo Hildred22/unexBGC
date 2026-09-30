@@ -18,9 +18,13 @@ The pipeline is designed to support researchers who may not have extensive bioin
 
 The pipeline requires paired-end metagenomic sequencing reads.
 
-Input samples are specified by the user in: config/samples.tsv
+Input samples are specified by the user in:
 
-Raw sequencing data should be placed in: data/raw/
+`config/samples.tsv`
+
+Raw sequencing data should be placed in:
+
+`data/raw/`
 
 Raw sequencing data are not included in this repository.
 
@@ -28,15 +32,19 @@ Raw sequencing data are not included in this repository.
 
 The sample sheet should contain three columns:
 
+```text
 sample    read1    read2
+```
 
 For example:
 
-sample    read1              read2
-
+```text
+sample    read1                  read2
 sample1   sample1_R1.fastq.gz    sample1_R2.fastq.gz
+```
 
 Users should replace the example entries with their own sample information.
+
 
 ## Reproducibility
 
