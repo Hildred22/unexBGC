@@ -3,7 +3,7 @@
 rule metabat2:
     input:
         contigs="results/assembly/megahit/{sample}/final.contigs.fa",
-        bam="results/mapping/bam/{sample}.sorted.bam"
+        depth="results/mapping/depth/{sample}_depth.txt"
     output:
         directory("results/binning/metabat2/{sample}")
     threads:
@@ -12,13 +12,11 @@ rule metabat2:
         """
         mkdir -p results/binning/metabat2/{wildcards.sample}
 
-        jgi_summarize_bam_contig_depths \
-            --outputDepth results/binning/metabat2/{wildcards.sample}/depth.txt \
-            {input.bam}
-
-        metabat \
+        metabat2 \
             -i {input.contigs} \
-            -a results/binning/metabat2/{wildcards.sample}/depth.txt \
+            -a {input.depth} \
             -o results/binning/metabat2/{wildcards.sample}/bin \
-            -t {threads}
+            -t {threads} \
+            -m 1500 \
+            --unbinned
         """
