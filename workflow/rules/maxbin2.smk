@@ -3,7 +3,7 @@
 rule maxbin2:
     input:
         contigs="results/assembly/megahit/{sample}/final.contigs.fa",
-        bam="results/mapping/bam/{sample}.sorted.bam"
+        abund="results/mapping/depth/{sample}_maxbin_abund.txt"
     output:
         directory("results/binning/maxbin2/{sample}")
     threads:
@@ -12,19 +12,10 @@ rule maxbin2:
         """
         mkdir -p results/binning/maxbin2/{wildcards.sample}
 
-        samtools sort \
-            -n \
-            -@ {threads} \
-            -o results/binning/maxbin2/{wildcards.sample}/reads.namesorted.bam \
-            {input.bam}
-
-        jgi_summarize_bam_contig_depths \
-            --outputDepth results/binning/maxbin2/{wildcards.sample}/depth.txt \
-            {input.bam}
-
         run_MaxBin.pl \
             -contig {input.contigs} \
-            -out results/binning/maxbin2/{wildcards.sample}/maxbin \
-            -abund results/binning/maxbin2/{wildcards.sample}/depth.txt \
+            -abund {input.abund} \
+            -out results/binning/maxbin2/{wildcards.sample}/bin \
+            -min_contig_length 1500 \
             -thread {threads}
         """
