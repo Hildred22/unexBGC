@@ -16,6 +16,7 @@ include: "workflow/rules/checkm2_combine.smk"
 include: "workflow/rules/hq_mq.smk"
 include: "workflow/rules/drep.smk"
 include: "workflow/rules/gtdbtk.smk"
+include: "workflow/rules/antismash.smk"
 
 rule all:
     input:
