@@ -6,7 +6,7 @@ rule bigscape:
     output:
         directory("results/bgc/bigscape")
     threads:
-        24
+        config["threads"]["bigscape"]
     params:
         pfam=config["bigscape_pfam"]
     shell:
