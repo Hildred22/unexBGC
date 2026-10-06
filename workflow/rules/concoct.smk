@@ -5,7 +5,7 @@
 
 rule concoct_cut_up:
     input:
-        contigs="results/assembly/megahit/{sample}/final.contigs.fa"
+        contigs="results/assembly/megahit/{sample}/{sample}.fa"
     output:
         contigs="results/binning/concoct/{sample}/contigs_10K.fa",
         bed="results/binning/concoct/{sample}/contigs_10K.bed"
@@ -82,7 +82,7 @@ rule concoct_merge:
 
 rule concoct_extract_bins:
     input:
-        contigs="results/assembly/megahit/{sample}/final.contigs.fa",
+        contigs="results/assembly/megahit/{sample}/{sample}.fa"",
         clustering="results/binning/concoct/{sample}/clustering_merged.csv"
     output:
         directory("results/binning/concoct/{sample}/fasta_bins")
