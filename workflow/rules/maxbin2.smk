@@ -2,7 +2,7 @@
 
 rule maxbin2:
     input:
-        contigs="results/assembly/megahit/{sample}/final.contigs.fa",
+        contigs="results/assembly/megahit/{sample}/{sample}.fa",
         abund="results/mapping/depth/{sample}_maxbin_abund.txt"
     output:
         directory("results/binning/maxbin2/{sample}")
