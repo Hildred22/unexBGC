@@ -39,7 +39,7 @@ rule dastool_prep:
 
 rule dastool:
     input:
-        contigs="results/assembly/megahit/{sample}/final.contigs.fa",
+        contigs="results/assembly/megahit/{sample}/{sample}.fa",
         metabat2="results/binning/dastool_helper/{sample}/{sample}_metabat2.scaffolds2bin.tsv",
         maxbin2="results/binning/dastool_helper/{sample}/{sample}_maxbin2.scaffolds2bin.tsv",
         concoct="results/binning/dastool_helper/{sample}/{sample}_concoct.scaffolds2bin.tsv"
