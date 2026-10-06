@@ -2,7 +2,7 @@
 
 rule antismash:
     input:
-        contigs="results/assembly/megahit/{sample}/final.contigs.fa"
+        contigs="results/assembly/megahit/{sample}/{sample}.fa"
     output:
         directory("results/bgc/antismash/{sample}")
     threads:
