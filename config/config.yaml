@@ -12,6 +12,8 @@ output_dir: "results"
 dastool_db: "/path/to/DAS_Tool/db"
 # GTDB-Tk database
 gtdbtk_db: "/path/to/gtdbtk/database"
+# BiG-SCAPE Pfam database
+bigscape_pfam: "/path/to/Pfam-A.hmm"
 
 # Computational resources ######NOT FINAL VALUES JUST FOR STRUCTURE
 threads:
