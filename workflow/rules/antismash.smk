@@ -18,3 +18,15 @@ rule antismash:
             --genefinding-tool prodigal \
             --cc-mibig
         """
+rule antismash_complete:
+    input:
+        expand(
+            "results/bgc/antismash/{sample}",
+            sample=samples["sample"].tolist()
+        )
+    output:
+        touch("results/bgc/antismash/.complete")
+    shell:
+        """
+        touch {output}
+        """
