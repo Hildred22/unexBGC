@@ -28,3 +28,13 @@ rule megahit:
             -t {threads} \
             -o results/assembly/megahit/{wildcards.sample}
         """
+#Rename assemblies to their specific sample identifiers
+rule rename_megahit_contigs:
+    input:
+        "results/assembly/megahit/{sample}/final.contigs.fa"
+    output:
+        "results/assembly/megahit/{sample}/{sample}.fa"
+    shell:
+        """
+        mv {input} {output}
+        """
