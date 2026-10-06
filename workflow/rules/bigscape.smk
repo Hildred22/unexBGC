@@ -2,19 +2,20 @@
 
 rule bigscape:
     input:
-        antismash="results/bgc/antismash"
+        antismash="results/bgc/antismash/.complete"
     output:
         directory("results/bgc/bigscape")
     threads:
         config["threads"]["bigscape"]
     params:
-        pfam=config["bigscape_pfam"]
+        pfam=config["bigscape_pfam"],
+        antismash_dir="results/bgc/antismash"
     shell:
         """
         mkdir -p results/bgc/bigscape
 
         bigscape cluster \
-            -i {input.antismash} \
+            -i {params.antismash_dir} \
             -o {output} \
             -p {params.pfam} \
             -c {threads} \
