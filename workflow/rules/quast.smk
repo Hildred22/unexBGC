@@ -7,7 +7,7 @@ SAMPLES = samples["sample"].tolist()
 
 rule quast:
     input:
-        contigs="results/assembly/megahit/{sample}/final.contigs.fa"
+        contigs="results/assembly/megahit/{sample}/{sample}.fa"
     output:
         report="results/assembly/quast/{sample}/report.html"
     threads:
