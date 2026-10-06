@@ -15,15 +15,16 @@ gtdbtk_db: "/path/to/gtdbtk/database"
 # BiG-SCAPE Pfam database
 bigscape_pfam: "/path/to/Pfam-A.hmm"
 
-# Computational resources ######NOT FINAL VALUES JUST FOR STRUCTURE
+# Computational resources
 threads:
   fastp: 12
   megahit: 24
   quast: 12
   bowtie2: 12
-  antismash: 24
   concoct: 24
   metabat2: 24
   maxbin2: 24
   dastool: 24
   checkm2: 24
+  antismash: 24
+  bigscape: 24
