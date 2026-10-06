@@ -17,6 +17,7 @@ include: "workflow/rules/hq_mq.smk"
 include: "workflow/rules/drep.smk"
 include: "workflow/rules/gtdbtk.smk"
 include: "workflow/rules/antismash.smk"
+include: "workflow/rules/bgc_regions.smk"
 include: "workflow/rules/bigscape.smk"
 
 rule all:
