@@ -2,7 +2,7 @@
 
 rule metabat2:
     input:
-        contigs="results/assembly/megahit/{sample}/final.contigs.fa",
+        contigs="results/assembly/megahit/{sample}/{sample}.fa",
         depth="results/mapping/depth/{sample}_depth.txt"
     output:
         directory("results/binning/metabat2/{sample}")
