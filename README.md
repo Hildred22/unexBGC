@@ -12,7 +12,8 @@ The pipeline is designed to support researchers who may not have extensive bioin
 
 ## Workflow
 
-###Add flow diagram of workflow here
+<img width="749" height="297" alt="Copy of LabUpdate (1)" src="https://github.com/user-attachments/assets/d90a0185-3ab3-4a38-8e35-20c8f4c7d4fa" />
+
 
 ## Input data
 
