@@ -28,8 +28,11 @@ It was built for microbiologists without extensive bioinformatics experience: yo
 ### The pipeline provides
 
 **Quality-checked genomes**: HQ and MQ MAGs, dereplicated, with completeness and contamination for each
+
 **Taxonomy and phylogeny**: GTDB classification plus separate bacterial and archaeal trees ready for iTOL
+
 **BGC catalogue**: one table listing every cluster with its product class, location and closest known relative
+
 **Novelty assessment**: gene cluster families compared against the MIBiG database of characterised clusters
 
 
