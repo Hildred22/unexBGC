@@ -1,10 +1,11 @@
 # Combine CheckM2 quality reports across samples
+# Output columns: Sample, Name, Completeness, Contamination, ... (comma-separated)
 
 rule combine_checkm2:
     input:
         expand(
             "results/binning/checkm2/{sample}/quality_report.tsv",
-            sample=samples["sample"].tolist()
+            sample=SAMPLES
         )
     output:
         "results/binning/checkm2/CheckM2_all_samples.csv"
@@ -16,11 +17,11 @@ rule combine_checkm2:
             sample=$(basename $(dirname "$report"))
 
             if [ "$first" -eq 1 ]; then
-                echo "Sample,$(head -n 1 "$report")" > {output}
+                head -n 1 "$report" | tr '\\t' ',' | sed 's/^/Sample,/' > {output}
                 first=0
             fi
 
-            tail -n +2 "$report" | \
+            tail -n +2 "$report" | tr '\\t' ',' | \
                 awk -v sample="$sample" '{{print sample "," $0}}' \
                 >> {output}
         done

@@ -9,10 +9,10 @@ rule concoct_cut_up:
     output:
         contigs="results/binning/concoct/{sample}/contigs_10K.fa",
         bed="results/binning/concoct/{sample}/contigs_10K.bed"
+    conda:
+        "../envs/concoct.yaml"
     shell:
         """
-        mkdir -p results/binning/concoct/{wildcards.sample}
-
         cut_up_fasta.py \
             {input.contigs} \
             -c 10000 \
@@ -28,9 +28,12 @@ rule concoct_cut_up:
 rule concoct_coverage:
     input:
         bed="results/binning/concoct/{sample}/contigs_10K.bed",
-        bam="results/mapping/bam/{sample}.sorted.bam"
+        bam="results/mapping/bam/{sample}.sorted.bam",
+        bai="results/mapping/bam/{sample}.sorted.bam.bai"
     output:
         "results/binning/concoct/{sample}/coverage_table.tsv"
+    conda:
+        "../envs/concoct.yaml"
     shell:
         """
         concoct_coverage_table.py \
@@ -50,16 +53,18 @@ rule concoct:
         clustering="results/binning/concoct/{sample}/clustering_gt1500.csv"
     threads:
         config["threads"]["concoct"]
+    log:
+        "logs/concoct/{sample}.log"
+    conda:
+        "../envs/concoct.yaml"
     shell:
         """
-        mkdir -p results/binning/concoct/{wildcards.sample}
-
         concoct \
             --composition_file {input.contigs} \
             --coverage_file {input.coverage} \
             --length_threshold 1500 \
             -b results/binning/concoct/{wildcards.sample}/ \
-            -t {threads}
+            -t {threads} > {log} 2>&1
         """
 
 
@@ -70,6 +75,8 @@ rule concoct_merge:
         clustering="results/binning/concoct/{sample}/clustering_gt1500.csv"
     output:
         "results/binning/concoct/{sample}/clustering_merged.csv"
+    conda:
+        "../envs/concoct.yaml"
     shell:
         """
         merge_cutup_clustering.py \
@@ -82,10 +89,12 @@ rule concoct_merge:
 
 rule concoct_extract_bins:
     input:
-        contigs="results/assembly/megahit/{sample}/{sample}.fa"",
+        contigs="results/assembly/megahit/{sample}/{sample}.fa",
         clustering="results/binning/concoct/{sample}/clustering_merged.csv"
     output:
         directory("results/binning/concoct/{sample}/fasta_bins")
+    conda:
+        "../envs/concoct.yaml"
     shell:
         """
         mkdir -p {output}

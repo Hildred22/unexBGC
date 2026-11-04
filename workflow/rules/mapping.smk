@@ -5,7 +5,7 @@
 
 rule bowtie2_build:
     input:
-        contigs="results/assembly/megahit/{sample}/final.contigs.fa"
+        contigs="results/assembly/megahit/{sample}/{sample}.fa"
     output:
         index=multiext(
             "results/mapping/bowtie2/{sample}/index",
@@ -16,13 +16,18 @@ rule bowtie2_build:
             ".rev.1.bt2",
             ".rev.2.bt2"
         )
+    threads:
+        config["threads"]["bowtie2"]
+    log:
+        "logs/bowtie2_build/{sample}.log"
+    conda:
+        "../envs/mapping.yaml"
     shell:
         """
-        mkdir -p results/mapping/bowtie2/{wildcards.sample}
-
         bowtie2-build \
+            --threads {threads} \
             {input.contigs} \
-            results/mapping/bowtie2/{wildcards.sample}/index
+            results/mapping/bowtie2/{wildcards.sample}/index > {log} 2>&1
         """
 
 
@@ -40,16 +45,17 @@ rule bowtie2_map:
         maxbin_abund="results/mapping/depth/{sample}_maxbin_abund.txt"
     threads:
         config["threads"]["bowtie2"]
+    log:
+        "logs/bowtie2_map/{sample}.log"
+    conda:
+        "../envs/mapping.yaml"
     shell:
         """
-        mkdir -p results/mapping/bam
-        mkdir -p results/mapping/depth
-
         bowtie2 \
             -x results/mapping/bowtie2/{wildcards.sample}/index \
             -1 {input.r1} \
             -2 {input.r2} \
-            -p {threads} \
+            -p {threads} 2> {log} \
             | samtools view -@ {threads} -bS - \
             | samtools sort -@ {threads} \
                 -o {output.bam}
@@ -58,7 +64,7 @@ rule bowtie2_map:
 
         jgi_summarize_bam_contig_depths \
             --outputDepth {output.depth} \
-            {output.bam}
+            {output.bam} 2>> {log}
 
         tail -n +2 {output.depth} | \
             awk -F'\\t' '{{print $1"\\t"$3}}' \

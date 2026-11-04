@@ -1,4 +1,5 @@
 # antiSMASH biosynthetic gene cluster identification rules for unexBGC
+# antiSMASH is run per sample on the assembled contigs (contigs >= 1500 bp).
 
 rule antismash:
     input:
@@ -7,26 +8,24 @@ rule antismash:
         directory("results/bgc/antismash/{sample}")
     threads:
         config["threads"]["antismash"]
+    log:
+        "logs/antismash/{sample}.log"
+    conda:
+        "../envs/antismash.yaml"
     shell:
         """
-        mkdir -p results/bgc/antismash/{wildcards.sample}
-
         antismash \
             {input.contigs} \
-            --output-dir results/bgc/antismash/{wildcards.sample} \
+            --output-dir {output} \
             --cpus {threads} \
+            --minlength 1500 \
             --genefinding-tool prodigal \
-            --cc-mibig
+            --cc-mibig > {log} 2>&1
         """
+
+
 rule antismash_complete:
     input:
-        expand(
-            "results/bgc/antismash/{sample}",
-            sample=samples["sample"].tolist()
-        )
+        expand("results/bgc/antismash/{sample}", sample=SAMPLES)
     output:
         touch("results/bgc/antismash/.complete")
-    shell:
-        """
-        touch {output}
-        """

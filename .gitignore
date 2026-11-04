@@ -222,3 +222,11 @@ data/raw/
 results/
 .snakemake/
 *.log
+
+# unexBGC pipeline outputs and input data (never commit these)
+data/raw/
+results/
+logs/
+.snakemake/
+*.fastq.gz
+*.fq.gz

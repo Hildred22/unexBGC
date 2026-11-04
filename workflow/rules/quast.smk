@@ -1,7 +1,5 @@
 # Assembly quality assessment rules for unexBGC
 
-SAMPLES = samples["sample"].tolist()
-
 
 # QUAST assessment of MEGAHIT assemblies
 
@@ -12,12 +10,14 @@ rule quast:
         report="results/assembly/quast/{sample}/report.html"
     threads:
         config["threads"]["quast"]
+    log:
+        "logs/quast/{sample}.log"
+    conda:
+        "../envs/assembly.yaml"
     shell:
         """
-        mkdir -p results/assembly/quast/{wildcards.sample}
-
         quast.py \
             {input.contigs} \
             -o results/assembly/quast/{wildcards.sample} \
-            -t {threads}
+            -t {threads} > {log} 2>&1
         """

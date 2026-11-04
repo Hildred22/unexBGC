@@ -8,14 +8,18 @@ rule maxbin2:
         directory("results/binning/maxbin2/{sample}")
     threads:
         config["threads"]["maxbin2"]
+    log:
+        "logs/maxbin2/{sample}.log"
+    conda:
+        "../envs/binning.yaml"
     shell:
         """
-        mkdir -p results/binning/maxbin2/{wildcards.sample}
+        mkdir -p {output}
 
         run_MaxBin.pl \
             -contig {input.contigs} \
             -abund {input.abund} \
-            -out results/binning/maxbin2/{wildcards.sample}/bin \
+            -out {output}/bin \
             -min_contig_length 1500 \
-            -thread {threads}
+            -thread {threads} > {log} 2>&1
         """

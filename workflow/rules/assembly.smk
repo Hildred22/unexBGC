@@ -1,21 +1,27 @@
 # Metagenome assembly rules for unexBGC
 
-SAMPLES = samples["sample"].tolist()
-
 
 # MEGAHIT metagenome assembly
+# MEGAHIT refuses to write into an existing directory, so it assembles into a
+# temporary folder and the final contigs are renamed to {sample}.fa.
 
 rule megahit:
     input:
         r1="results/qc/trimmed/{sample}_trimmed.R1.fastq.gz",
         r2="results/qc/trimmed/{sample}_trimmed.R2.fastq.gz"
     output:
-        contigs="results/assembly/megahit/{sample}/final.contigs.fa"
+        contigs="results/assembly/megahit/{sample}/{sample}.fa"
+    params:
+        tmpdir="results/assembly/megahit/{sample}/megahit_tmp"
     threads:
         config["threads"]["megahit"]
+    log:
+        "logs/megahit/{sample}.log"
+    conda:
+        "../envs/assembly.yaml"
     shell:
         """
-        mkdir -p results/assembly/megahit/{wildcards.sample}
+        rm -rf {params.tmpdir}
 
         megahit \
             -1 {input.r1} \
@@ -26,15 +32,9 @@ rule megahit:
             --k-max 127 \
             --k-step 10 \
             -t {threads} \
-            -o results/assembly/megahit/{wildcards.sample}
-        """
-#Rename assemblies to their specific sample identifiers
-rule rename_megahit_contigs:
-    input:
-        "results/assembly/megahit/{sample}/final.contigs.fa"
-    output:
-        "results/assembly/megahit/{sample}/{sample}.fa"
-    shell:
-        """
-        mv {input} {output}
+            -o {params.tmpdir} > {log} 2>&1
+
+        mv {params.tmpdir}/final.contigs.fa {output.contigs}
+        mv {params.tmpdir}/log results/assembly/megahit/{wildcards.sample}/megahit.log
+        rm -rf {params.tmpdir}
         """
