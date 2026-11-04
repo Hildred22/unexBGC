@@ -1,0 +1,11 @@
+name: unexbgc-bigscape
+# BiG-SCAPE 2 is not on Bioconda; it is installed from the official GitHub release.
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.11
+  - hmmer
+  - pip
+  - pip:
+      - git+https://github.com/medema-group/BiG-SCAPE.git@v2.0.3

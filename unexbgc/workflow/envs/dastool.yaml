@@ -1,0 +1,7 @@
+name: unexbgc-dastool
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - das_tool=1.1
+  - diamond

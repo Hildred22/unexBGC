@@ -1,0 +1,36 @@
+# unexBGC configuration file
+
+# Sample sheet (tab-separated: sample, read1, read2)
+samples: "config/samples.tsv"
+
+# Folder containing the raw paired-end reads listed in the sample sheet
+input_dir: "data/raw"
+
+# Output folder
+output_dir: "results"
+
+# Reference databases (edit these paths for your system)
+# DAS Tool: leave empty ("") to use the database bundled with DAS Tool
+dastool_db: ""
+# CheckM2: leave empty ("") if the CHECKM2DB environment variable is set
+checkm2_db: "/path/to/checkm2/uniref100.KO.1.dmnd"
+# GTDB-Tk reference data (GTDBTK_DATA_PATH)
+gtdbtk_db: "/path/to/gtdbtk/release"
+# BiG-SCAPE Pfam database
+bigscape_pfam: "/path/to/Pfam-A.hmm"
+
+# Threads per rule
+threads:
+  fastp: 12
+  megahit: 24
+  quast: 12
+  bowtie2: 12
+  concoct: 24
+  metabat2: 24
+  maxbin2: 24
+  dastool: 24
+  checkm2: 24
+  drep: 24
+  gtdbtk: 24
+  antismash: 24
+  bigscape: 24

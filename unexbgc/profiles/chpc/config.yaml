@@ -1,0 +1,22 @@
+# Snakemake profile for the CHPC Lengau cluster (PBS Pro)
+# Requires: pip install snakemake-executor-plugin-cluster-generic
+# Usage:    snakemake --profile profiles/chpc
+# Replace YOUR_PROJECT with your CHPC project code before use.
+
+executor: cluster-generic
+cluster-generic-submit-cmd: >-
+  mkdir -p logs/pbs &&
+  qsub -P YOUR_PROJECT -q smp
+  -l select=1:ncpus={threads}
+  -l walltime={resources.walltime}
+  -N {rule}
+  -o logs/pbs/ -e logs/pbs/
+  -V
+jobs: 10
+use-conda: true
+conda-frontend: conda
+latency-wait: 120
+rerun-incomplete: true
+printshellcmds: true
+default-resources:
+  walltime: "48:00:00"

@@ -1,0 +1,8 @@
+name: unexbgc-mapping
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - bowtie2=2.5
+  - samtools=1.20
+  - metabat2=2.15

@@ -1,0 +1,9 @@
+name: unexbgc-drep
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - drep=3.5
+  - fastani
+  - mash
+  - mummer
