@@ -1,14 +1,38 @@
-# unexBGC
+<h1 align="center">unexBGC</h1>
 
-An integrated Snakemake pipeline for identifying and characterising biosynthetic gene clusters from environmental metagenomic data.
+<p align="center">
+  <b>From raw metagenomic reads to biosynthetic gene clusters, in one reproducible workflow</b>
+</p>
 
-## Overview
+<p align="center">
+  <a href="https://snakemake.github.io"><img src="https://img.shields.io/badge/snakemake-%E2%89%A58.0-039475" alt="Snakemake ≥8.0"></a>
+  <img src="https://img.shields.io/badge/package%20manager-conda-44A833" alt="conda">
+  <img src="https://img.shields.io/badge/platform-Linux%20%7C%20HPC-1f6feb" alt="Linux | HPC">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT licence"></a>
+</p>
 
-unexBGC is a reproducible and modular bioinformatics pipeline designed to process environmental metagenomic sequencing data and investigate their biosynthetic potential.
+<p align="center">
+  <a href="#workflow">Workflow</a> •
+  <a href="#quick-start">Quick start</a> •
+  <a href="#input-data">Input</a> •
+  <a href="#main-outputs">Outputs</a> •
+  <a href="#citation">Citation</a>
+</p>
 
-The pipeline integrates quality control, metagenome assembly, genome binning, bin refinement and quality assessment, dereplication, taxonomic classification, and biosynthetic gene cluster analysis into a single workflow.
+---
 
-The pipeline is designed to support researchers who may not have extensive bioinformatics expertise by providing an integrated and reproducible workflow from raw sequencing reads to interpretable biosynthetic gene cluster information.
+**unexBGC** finds the genes microbes use to make natural products (BGCs) in **marine metagenomes**. Starting from paired-end sequencing reads, it reconstructs metagenome-assembled genomes (MAGs), identifies taxonomy, detects biosynthetic gene clusters (BGCs) and identifies potentially novel BGCs.
+
+It was built for microbiologists without extensive bioinformatics experience: you edit **one sample sheet** and **one settings file**, and Snakemake runs every step in the right order, locally or on an HPC cluster.
+
+### The pipeline provides
+
+**Quality-checked genomes**: HQ and MQ MAGs, dereplicated, with completeness and contamination for each
+**Taxonomy and phylogeny**: GTDB classification plus separate bacterial and archaeal trees ready for iTOL
+**BGC catalogue**: one table listing every cluster with its product class, location and closest known relative
+**Novelty assessment**: gene cluster families compared against the MIBiG database of characterised clusters
+
+
 
 ## Workflow
 
