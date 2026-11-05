@@ -31,7 +31,7 @@ It was built for microbiologists without extensive bioinformatics experience: yo
 
 ## Workflow
 
-<img width="749" height="297" alt="unexBGC workflow" src="https://github.com/user-attachments/assets/d90a0185-3ab3-4a38-8e35-20c8f4c7d4fa" />
+<img width="1135" height="450" alt="image" src="https://github.com/user-attachments/assets/6a6500f9-40f6-4303-891e-8630258a178c" />
 
 *Blue arrows: read processing; red: BGC branch (antiSMASH runs on assembled contigs); green: MAG branch. Figure created in BioRender.com.*
 
