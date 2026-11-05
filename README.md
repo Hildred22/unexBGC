@@ -31,7 +31,7 @@ It was built for microbiologists without extensive bioinformatics experience: yo
 
 ## Workflow
 
-<img width="1135" height="450" alt="image" src="https://github.com/user-attachments/assets/6a6500f9-40f6-4303-891e-8630258a178c" />
+<img width="1127" height="437" alt="image" src="https://github.com/user-attachments/assets/9bb9a39e-4094-47dd-81b7-e1dea1cbd8a2" />
 
 *Blue arrows: read processing; red: BGC branch (antiSMASH runs on assembled contigs); green: MAG branch. Figure created in BioRender.com.*
 
